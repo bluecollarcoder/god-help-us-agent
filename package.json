@@ -1,0 +1,25 @@
+{
+  "name": "god-help-us",
+  "version": "0.0.1",
+  "description": "Server agent for a smart customer service chat.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluecollarcoder/god-help-us-agent.git"
+  },
+  "author": "Wayne Chan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bluecollarcoder/god-help-us-agent/issues"
+  },
+  "homepage": "https://github.com/bluecollarcoder/god-help-us-agent#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "livechatapi": "^0.3.2",
+    "q": "^1.4.1",
+    "request": "^2.72.0"
+  }
+}
