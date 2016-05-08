@@ -23,7 +23,7 @@ module.exports = {
     var txtMsg = _.pluck(messages, 'message').join('\n');
 
     var deferred = Q.defer();
-    tone_analyzer.tone({ text: txtMsg }, function(err, tone) {
+    tone_analyzer.tone({ text: chatMsg.message }, function(err, tone) {
       if (err)
         deferred.reject(err);
       else {

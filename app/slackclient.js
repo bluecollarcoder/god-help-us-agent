@@ -4,7 +4,7 @@ var _ = require('underscore');
 
 module.exports = {
   'sendMessage' : function(sender, message) {
-    var senderName = (typeof sender === 'object') ? sender.name : sender;
+    var senderName = (sender != null && typeof sender === 'object') ? sender.name : sender;
     var payload = {
       "channel": "#support",
       "username": senderName,
@@ -14,7 +14,7 @@ module.exports = {
     return doSend(payload);
   },
   'sendAlert' : function(sender, message, suggestedResponses) {
-    var senderName = (typeof sender === 'object') ? sender.name : sender;
+    var senderName = (sender != null && typeof sender === 'object') ? sender.name : sender;
     var payload = {
       "channel": "#support",
       "username": senderName,
