@@ -24,13 +24,17 @@ app.post('/chat/user', function(req, res) {
   var name = req.body.name;
   var id = uuid.v4();
 
-  var user = new User({
-    name : name,
-    email : email,
-    id : id
-  });
-  State.addUser(user);
-  res.send(user);
+  if (email && name) {
+    var user = new User({
+      name : name,
+      email : email,
+      id : id
+    });
+    State.addUser(user);
+    res.send(user);
+  } else {
+    res.status(500).send({ error: 'Name or email missing!' });
+  }
 });
 
 app.post('/chat/agent', function(req, res) {
@@ -38,13 +42,17 @@ app.post('/chat/agent', function(req, res) {
   var name = req.body.name;
   var id = uuid.v4();
 
-  var agent = new Agent({
-    name : name,
-    email : email,
-    id : id
-  });
-  State.addAgent(agent);
-  res.send(agent);
+  if (email && name) {
+    var agent = new Agent({
+      name : name,
+      email : email,
+      id : id
+    });
+    State.addAgent(agent);
+    res.send(agent);
+  } else {
+    res.status(500).send({ error: 'Name or email missing!' });
+  }
 });
 
 app.get('/chat/messages', function(req, res) {
@@ -59,18 +67,24 @@ app.get('/chat/meta', function(req, res) {
 
 app.post('/chat/agent/message', function(req, res) {
   var message = req.body.message;
-  var chat = State.getChat();
-
-  var agent = chat.agent;
-  res.send(State.sendMessage(agent, message));
+  if (message) {
+    var chat = State.getChat();
+    var agent = chat.agent;
+    res.send(State.sendMessage(agent, message));
+  } else {
+    res.status(500).send({ error: 'Message missing!' });
+  }
 });
 
 app.post('/chat/user/message', function(req, res) {
   var message = req.body.message;
-  var chat = State.getChat();
-
-  var user = chat.user;
-  res.send(State.sendMessage(user, message));
+  if (message) {
+    var chat = State.getChat();
+    var user = chat.user;
+    res.send(State.sendMessage(user, message));
+  } else {
+    res.status(500).send({ error: 'Message missing!' });
+  }
 });
 
 app.listen(8080);
