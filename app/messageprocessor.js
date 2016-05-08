@@ -43,7 +43,11 @@ module.exports = {
 
         if (!_.isEmpty(overLimit)) {
           var tokens = _.keys(overLimit);
-          SlackClient.sendAlert('GodSaveUs Chat Bot', sender.name + '\'s *' + tokens.join(', ') + '* ' + (tokens.length > 1 ? 'have' : 'has') + ' increased.');
+          SlackClient.sendAlert(
+            'GodSaveUs Chat Bot',
+            sender.name + '\'s *' + tokens.join(', ') + '* ' + (tokens.length > 1 ? 'have' : 'has') + ' increased.',
+            chatMsg.suggestedResponses
+          );
         }
 
         deferred.resolve(meta);
