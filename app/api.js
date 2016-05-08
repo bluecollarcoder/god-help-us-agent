@@ -100,6 +100,7 @@ app.post('/chat/user/message', function(req, res) {
 app.post('/chat/slack/message', function(req, res) {
   var message = req.body.text;
   if (message) {
+    message = message.replace(/^[a-zA-Z0-9]*\:\s*/, '');
     var chat = State.getChat();
     var agent = chat.agent;
     res.send(State.sendMessage(agent, message));
