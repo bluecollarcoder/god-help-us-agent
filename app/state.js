@@ -10,6 +10,7 @@ var ChatMessage = function(sender, message) {
   this.message = message;
   this.timestamp = new Date();
   this.meta = {};
+  this.suggestedResponses = [];
 };
 ChatMessage.prototype.constructor = Object.create(ChatMessage.prototype);
 

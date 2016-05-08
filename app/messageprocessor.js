@@ -2,6 +2,7 @@ var watson = require('watson-developer-cloud');
 var _ = require('underscore');
 var Q = require('q');
 var SlackClient = require('./slackclient');
+var ResponseGuide = require('./responseguide');
 
 var tone_analyzer = watson.tone_analyzer({
   username: '757794f3-4b24-4b8e-aa8e-a71921e0ad20',
@@ -37,6 +38,8 @@ module.exports = {
         var overLimit = _.pick(diff, function(_val, _key) {
           return _val > 0.2;
         });
+
+        chatMsg.suggestedResponses = ResponseGuide.getResponse(diff);
 
         if (!_.isEmpty(overLimit)) {
           var tokens = _.keys(overLimit);
