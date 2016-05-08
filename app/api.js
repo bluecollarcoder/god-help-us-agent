@@ -21,7 +21,7 @@ var Agent = function(obj) {
 };
 Agent.prototype.constructor = Object.create(Agent.prototype);
 
-app.get('/chat/user', function(req, res) {
+app.post('/chat/user', function(req, res) {
   var email = req.query.email;
   var name = req.query.name;
   var id = uuid.v4();
@@ -35,7 +35,7 @@ app.get('/chat/user', function(req, res) {
   res.send(user);
 });
 
-app.get('/chat/agent', function(req, res) {
+app.post('/chat/agent', function(req, res) {
   var email = req.query.email;
   var name = req.query.name;
   var id = uuid.v4();
@@ -52,15 +52,6 @@ app.get('/chat/agent', function(req, res) {
 app.get('/chat/messages', function(req, res) {
   var chat = State.getChat();
   res.send(chat.messages);
-});
-
-app.post('/chat/user/message', function(req, res) {
-  var message = req.body.message;
-  var chat = State.getChat();
-
-  var user = chat.user;
-  var chatMsg = State.sendMessage(user, message);
-  res.send(chatMsg);
 });
 
 app.post('/chat/agent/message', function(req, res) {
