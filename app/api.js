@@ -57,7 +57,17 @@ app.post('/chat/agent', function(req, res) {
 
 app.get('/chat/messages', function(req, res) {
   var chat = State.getChat();
-  res.send(chat.messages);
+  var filtered;
+  if (req.query.start) {
+    var start = new Date(req.query.start);
+    filtered = _.filter(chat.messages, function(message) {
+      return message.timestamp.getTime() > start.getTime();
+    });
+  } else {
+    filtered = chat.messages;
+  }
+
+  res.send(filtered);
 });
 
 app.get('/chat/meta', function(req, res) {
