@@ -110,3 +110,11 @@ app.post('/chat/slack/message', function(req, res) {
 });
 
 app.listen(8080);
+
+// Initialize with default agent.
+var defaultAgent = new Agent({
+  name : 'Super Agent',
+  email : 'super.agent@gmail.com',
+  id : uuid.v4()
+});
+State.addAgent(defaultAgent);
