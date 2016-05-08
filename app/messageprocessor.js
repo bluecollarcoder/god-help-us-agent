@@ -15,16 +15,17 @@ var ToneMeta = function(json) {
 ToneMeta.prototype.constructor = Object.create(ToneMeta.prototype);
 
 module.exports = {
-  'analyze' : function(message) {
+  'analyze' : function(messages) {
+    var txtMsg = _.pluck(messages, 'message').join('\n');
+
     var deferred = Q.defer();
-    tone_analyzer.tone({ text: message }, function(err, tone) {
+    tone_analyzer.tone({ text: txtMsg }, function(err, tone) {
       if (err)
         deferred.reject(err);
       else {
         var meta = {
           tone : new ToneMeta(tone)
         };
-        console.log(meta);
         deferred.resolve(meta);
       }
     });

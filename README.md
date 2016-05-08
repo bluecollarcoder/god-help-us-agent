@@ -11,6 +11,9 @@ Join chat as the agent. Params: email, name.
 ## `GET /chat/messages`
 Get all messages in chat room.
 
+## `GET /chat/meta`
+Get meta data (including sentiment) of the chat room.
+
 ## `POST /chat/user/message`
 Post a message as the user. Params: message.
 

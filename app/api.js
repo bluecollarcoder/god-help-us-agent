@@ -52,14 +52,17 @@ app.get('/chat/messages', function(req, res) {
   res.send(chat.messages);
 });
 
+app.get('/chat/meta', function(req, res) {
+  var chat = State.getChat();
+  res.send(chat.meta);
+});
+
 app.post('/chat/agent/message', function(req, res) {
   var message = req.body.message;
   var chat = State.getChat();
 
   var agent = chat.agent;
-  State.sendMessage(agent, message).then(function(chatMsg) {
-    res.send(chatMsg);
-  });
+  res.send(State.sendMessage(agent, message));
 });
 
 app.post('/chat/user/message', function(req, res) {
@@ -67,9 +70,7 @@ app.post('/chat/user/message', function(req, res) {
   var chat = State.getChat();
 
   var user = chat.user;
-  State.sendMessage(user, message).then(function(chatMsg) {
-    res.send(chatMsg);
-  });
+  res.send(State.sendMessage(user, message));
 });
 
 app.listen(8080);
