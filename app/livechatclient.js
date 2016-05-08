@@ -2,7 +2,7 @@
 
 var Q = require('q');
 var LiveChatApi = require('livechatapi').LiveChatApi;
-var api = new LiveChatApi('ioessdeveloper@gmail.com', '113b93f17b4ef585160d964b7316a884');
+var api = new LiveChatApi('ioessdeveloper@gmail.com', '07ccb1c3802e10c4ac1d8d6d371426f3');
 var request = require('request');
 var uuid = require('node-uuid');
 
@@ -28,7 +28,7 @@ module.exports = {
     });
     return deferred.promise;
   },
-  'startClient' : function(visitorId, email, name) {
+  'startChat' : function(visitorId, email, name) {
     var url = 'https://api.livechatinc.com/visitors/' + visitorId + '/chat/start';
     var data = {
       licence_id : '7477711',
@@ -52,6 +52,35 @@ module.exports = {
       if (!error && response.statusCode == 200) {
         var obj = JSON.parse(body);
         deferred.resolve(obj.secured_session_id);
+      } else {
+        deferred.reject(error);
+      }
+    });
+    return deferred.promise;
+  },
+  'sendMessage' : function(visitorId, sessionId, message) {
+    var url = 'https://api.livechatinc.com/visitors/' + visitorId + '/chat/send_message';
+    var data = {
+      licence_id : '7477711',
+      secured_session_id : sessionId,
+      message : message
+    };
+    var deferred = Q.defer();
+    console.log('SENDING MESSAGE ' + message);
+    request.post({
+      url: url,
+      headers : {
+        'X-API-Version' : 2
+      },
+      formData: data
+    }, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        var obj = JSON.parse(body);
+        if (obj.success) {
+          deferred.resolve(obj.secured_session_id);
+        } else {
+          deferred.reject(obj);
+        }
       } else {
         deferred.reject(error);
       }

@@ -2,6 +2,7 @@
 
 var Agent = require('./app/agent');
 var Api = require('./app/api');
+var State = require('./app/state');
 
 var Runner = function() {
   Agent();
