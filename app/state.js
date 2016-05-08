@@ -9,6 +9,7 @@ var ChatMessage = function(sender, message) {
   this.sender = sender;
   this.message = message;
   this.timestamp = new Date();
+  this.meta = {};
 };
 ChatMessage.prototype.constructor = Object.create(ChatMessage.prototype);
 
@@ -32,11 +33,9 @@ var chat = new ChatSession();
 module.exports = {
   'addUser' : function(user) {
     chat.user = user;
-    console.log(chat);
   },
   'addAgent' : function(agent) {
     chat.agent = agent;
-    console.log(chat);
   },
   'getChat' : function() {
     return chat;
@@ -48,8 +47,7 @@ module.exports = {
     if (sender == chat.user) {
       SlackClient.sendMessage(sender, message);
 
-      var senderMessages = chat.filterMessagesBySender(sender);
-      MessageProcessor.analyze(senderMessages).then(function(meta) {
+      MessageProcessor.analyze(chat, chatMsg).then(function(meta) {
         chat.meta = meta;
       }).catch(function(err) {
         console.log(err);
