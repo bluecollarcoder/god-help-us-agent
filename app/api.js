@@ -97,4 +97,15 @@ app.post('/chat/user/message', function(req, res) {
   }
 });
 
+app.post('/chat/slack/message', function(req, res) {
+  var message = req.body.text;
+  if (message) {
+    var chat = State.getChat();
+    var agent = chat.agent;
+    res.send(State.sendMessage(agent, message));
+  } else {
+    res.status(500).send({ error: 'Message missing!' });
+  }
+});
+
 app.listen(8080);
