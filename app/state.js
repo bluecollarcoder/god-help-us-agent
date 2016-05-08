@@ -2,6 +2,7 @@ var _ = require('underscore');
 var uuid = require('node-uuid');
 var Q = require('q');
 var MessageProcessor = require('./messageprocessor');
+var SlackClient = require('./slackclient');
 
 var ChatMessage = function(sender, message) {
   this.id = uuid.v4();
@@ -45,6 +46,8 @@ module.exports = {
     chat.messages.push(chatMsg);
 
     if (sender == chat.user) {
+      SlackClient.sendMessage(sender, message);
+
       var senderMessages = chat.filterMessagesBySender(sender);
       MessageProcessor.analyze(senderMessages).then(function(meta) {
         chat.meta = meta;
@@ -53,6 +56,6 @@ module.exports = {
       });
     }
 
-    return _.pick(chatMsg, 'id', 'timestamp');
+    return _.pick(chatMsg, 'id', 'timestamp', 'message');
   }
 };
