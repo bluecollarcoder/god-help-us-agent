@@ -1,5 +1,3 @@
-'use strict';
-
 var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
@@ -22,8 +20,8 @@ var Agent = function(obj) {
 Agent.prototype.constructor = Object.create(Agent.prototype);
 
 app.post('/chat/user', function(req, res) {
-  var email = req.query.email;
-  var name = req.query.name;
+  var email = req.body.email;
+  var name = req.body.name;
   var id = uuid.v4();
 
   var user = new User({
@@ -36,8 +34,8 @@ app.post('/chat/user', function(req, res) {
 });
 
 app.post('/chat/agent', function(req, res) {
-  var email = req.query.email;
-  var name = req.query.name;
+  var email = req.body.email;
+  var name = req.body.name;
   var id = uuid.v4();
 
   var agent = new Agent({
@@ -59,8 +57,9 @@ app.post('/chat/agent/message', function(req, res) {
   var chat = State.getChat();
 
   var agent = chat.agent;
-  var chatMsg = State.sendMessage(agent, message);
-  res.send(chatMsg);
+  State.sendMessage(agent, message).then(function(chatMsg) {
+    res.send(chatMsg);
+  });
 });
 
 app.post('/chat/user/message', function(req, res) {
@@ -68,8 +67,9 @@ app.post('/chat/user/message', function(req, res) {
   var chat = State.getChat();
 
   var user = chat.user;
-  var chatMsg = State.sendMessage(user, message);
-  res.send(chatMsg);
+  State.sendMessage(user, message).then(function(chatMsg) {
+    res.send(chatMsg);
+  });
 });
 
 app.listen(8080);
