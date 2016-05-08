@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/bluecollarcoder/god-help-us-agent#readme",
   "dependencies": {
+    "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "livechatapi": "^0.3.2",
     "q": "^1.4.1",

@@ -29,5 +29,14 @@ module.exports = {
   'addAgent' : function(agent) {
     chat.agent = agent;
     console.log(chat);
+  },
+  'getChat' : function() {
+    return chat;
+  },
+  'sendMessage' : function(sender, message) {
+    var chatMsg = new ChatMessage(sender, message);
+    chat.messages.push(chatMsg);
+    console.log(chat);
+    return chatMsg;
   }
 };
